@@ -15,7 +15,8 @@ function minimizeDivs (jNode) {
     url = window.location.pathname.split("/")
     if (
         url[1] == "outlet" && url[3] == "crm" ||
-        url[1] == "distribution" && url[2] == "processing"
+        url[1] == "distribution" && url[2] == "processing" ||
+        url[1] == "distribution" && url[2] == "multi-journey-planning" && url[3] == "vehicleplan"
     ) {
         jNode.click();
     }
