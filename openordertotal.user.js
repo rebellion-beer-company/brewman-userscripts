@@ -9,8 +9,6 @@
 // @require     https://gist.github.com/raw/2625891/waitForKeyElements.js
 // ==/UserScript==
 
-let total = {};
-
 waitForKeyElements ("div[ref='centerContainer'] div[role='row'], .bm-tabs", getRunningTotal)
 
 function getRunningTotal (jNode) {
@@ -22,20 +20,14 @@ function getRunningTotal (jNode) {
             }
         } else {
             let date = jNode.children("div[col-id='orders_despatch_date']").find("p").text().trim().replaceAll("/", "-");
-            let qty = jNode.children("div[col-id='qty']").find("p").text().trim();
-            console.log(date, qty);
-            // let totalTable = 
+            let qty = parseInt(jNode.children("div[col-id='qty']").find("p").text());
             if ($("#total-" + date).length == 0) {
-                let newRow = '<tr id="total-' + date + '"><td>' + date + '</td><td class="qty">0</td></tr>';
+                let newRow = '<tr><td>' + date + ' - </td><td id="total-' + date + '">0</td></tr>';
                 $("#totals-table").append(newRow);
             }
-            console.log($("#total-" + date))
-            console.log($("#total-" + date).children())
-            console.log($("#total-" + date).children(".qty"))
-            let totalQty = parseInt($("#total-" + date).children(".qty").eq(0).text());
-            console.log(totalQty)
-            let newTotalQty = totalQty + parseInt(qty);
-            $("#total-" + date).children(".qty").eq(0).text(newTotalQty.toString());
+            let totalQty = parseInt($("#total-" + date).text())
+            let newTotalQty = totalQty + qty;
+            $("#total-" + date).text(newTotalQty.toString());
         }
     }
     console.log(jNode);
