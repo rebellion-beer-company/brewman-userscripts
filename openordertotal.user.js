@@ -9,26 +9,36 @@
 // @require     https://gist.github.com/raw/2625891/waitForKeyElements.js
 // ==/UserScript==
 
+let countedOrders = [];
+
 waitForKeyElements ("div[ref='centerContainer'] div[role='row'], .bm-tabs", getRunningTotal)
 
 function getRunningTotal (jNode) {
     url = window.location.pathname.split("/");
     if (url[1] == "stock" && url[3] == "openorders") {
         if (jNode.attr("class").includes("bm-tabs")) {
+            // Initialize table
             if ($("#totals-table").length == 0) {
-                $('<table id="totals-table"></table>').insertAfter(jNode)
+                $('<table id="totals-table"></table>').insertAfter(jNode);
             }
         } else {
+            // Process table row
+            let orderNumber = jNode.children("div[col-id='orders_order_number']").find("p").text().trim();
             let date = jNode.children("div[col-id='orders_despatch_date']").find("p").text().trim().replaceAll("/", "-");
             let qty = parseInt(jNode.children("div[col-id='qty']").find("p").text());
-            if ($("#total-" + date).length == 0) {
-                let newRow = '<tr><td>' + date + ' - </td><td id="total-' + date + '">0</td></tr>';
-                $("#totals-table").append(newRow);
+            if (!countedOrders.includes(orderNumber)) {
+                if ($("#total-" + date).length == 0) {
+                    // Create date row if not exists
+                    let newRow = '<tr><td>' + date + ' - </td><td id="total-' + date + '">0</td></tr>';
+                    $("#totals-table").append(newRow);
+                }
+                // Add row quantity to total row
+                let totalQty = parseInt($("#total-" + date).text())
+                let newTotalQty = totalQty + qty;
+                $("#total-" + date).text(newTotalQty.toString());
+                // Add order number to array so it is not processed again
+                countedOrders.push(orderNumber);
             }
-            let totalQty = parseInt($("#total-" + date).text())
-            let newTotalQty = totalQty + qty;
-            $("#total-" + date).text(newTotalQty.toString());
         }
     }
-    console.log(jNode);
 }
