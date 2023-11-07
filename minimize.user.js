@@ -2,7 +2,7 @@
 // @name        Brewman v7 - Minimize Outlet Divs
 // @match       https://brewman.premiersystems.com/*
 // @grant       none
-// @version     1.3
+// @version     1.4
 // @downloadURL https://github.com/rebellion-beer-company/brewman-userscripts/blob/master/minimize.user.js?raw=true
 // @description Minimize all info boxes on outlet pages when loading - Helps finding the required information quickly easier
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js
