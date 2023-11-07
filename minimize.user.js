@@ -14,10 +14,21 @@ waitForKeyElements (".bm-card-title", minimizeDivs)
 function minimizeDivs (jNode) {
     url = window.location.pathname.split("/")
     if (
-        url[1] == "outlet" && url[3] == "crm" ||
         url[1] == "distribution" && url[2] == "processing" ||
         url[1] == "distribution" && url[2] == "multi-journey-planning" && url[3] == "vehicleplan"
     ) {
         jNode.click();
+    } else if (url[1] == "outlet" && url[3] == "crm") {
+        let tabTitle = jNode.parent().attr("data-qa");
+        if (tabTitle != "crm_log_communication" && tabTitle != "crm_activity_log") {
+            jNode.click();
+        }
     }
+}
+
+
+waitForKeyElements ("div[data-qa='crm_communications']", selectCommunicationsTab)
+
+function selectCommunicationsTab (jNode) {
+    jNode.click();
 }
