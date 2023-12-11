@@ -2,7 +2,7 @@
 // @name        Brewman v7 - Minimize Outlet Divs
 // @match       https://brewman.premiersystems.com/*
 // @grant       none
-// @version     1.4
+// @version     1.5
 // @downloadURL https://github.com/rebellion-beer-company/brewman-userscripts/blob/master/minimize.user.js?raw=true
 // @description Minimize all info boxes on outlet pages when loading - Helps finding the required information quickly easier
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js
@@ -20,7 +20,7 @@ function minimizeDivs (jNode) {
         jNode.click();
     } else if (url[1] == "outlet" && url[3] == "crm") {
         let tabTitle = jNode.parent().attr("data-qa");
-        if (tabTitle != "crm_log_communication" && tabTitle != "crm_activity_log") {
+        if (tabTitle != "crm_log_communication" && tabTitle != "crm_activity_log" && jNode.parent().attr("label") != "Recently Ordered Products") {
             jNode.click();
         }
     }
